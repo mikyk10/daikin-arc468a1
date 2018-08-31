@@ -1,0 +1,32 @@
+<html>
+<head>
+	<script type="text/javascript" src="daikinarc468a1.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<script>
+		var encoder = new DaikinArc468A1Encoder();
+		
+		var seq = encoder.encode({
+			"autotemp": "-4",
+			"temperature": 22,
+			"state": true,
+			"mode": "hot",
+			"fan": 5,
+			"swing": true,
+			"streamer": true,
+			"ontimer": 0,
+			"offtimer": 0
+		});
+		for (var i=0; i < seq.length; i++) {
+			seq[i] = seq[i].toString(16);
+		}
+		console.log(seq.join(","));
+		
+		jQuery.post("http://192.168.3.9/ir/raw", {
+			"hz": 38,
+			"data": seq.join(",")
+		});
+	</script>
+</body>
+</html>
